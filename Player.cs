@@ -6,7 +6,7 @@ namespace XOX
     {
         public Player()
         {
-            Turn = FieldValue.X;
+            Turn = FieldValue.OX;
         }
 
         public void Toggle()
