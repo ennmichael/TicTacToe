@@ -37,6 +37,13 @@ namespace XOX
 
     class Table
     {
+        private FieldValue winnerBack = FieldValue.None;
+        private bool winnerCalculated = false;
+
+        private readonly XOXButton [,] buttons;
+        private readonly int len;
+        private readonly Player p;
+
         public FieldValue Winner
         {
             get
@@ -50,6 +57,7 @@ namespace XOX
         {
             buttons = new XOXButton[len, len];
             this.len = len;
+            this.p = p;
 
             for (int x = 0; x < this.len; ++ x)
                 for (int y = 0; y < this.len; ++ y)
@@ -63,10 +71,7 @@ namespace XOX
 
         public bool Filled()
         {
-            foreach (XOXButton button in buttons)
-                if (button.Value == FieldValue.None)
-                    return false;
-            return true;
+            return p.TurnCount >= len * len;
         }
 
         public void PackTo(XOXWindow w)
@@ -76,6 +81,9 @@ namespace XOX
 
         private void CalculateWinnerBackIfNeeded()
         {
+            if (p.TurnCount < 6)
+                return;
+
             if (!winnerCalculated)
             {
                 winnerCalculated = true;
@@ -149,12 +157,6 @@ namespace XOX
 
             return result;
         }
-
-        private FieldValue winnerBack = FieldValue.None;
-        private bool winnerCalculated = false;
-
-        private readonly XOXButton [,] buttons;
-        private readonly int len;
     }
 }
 

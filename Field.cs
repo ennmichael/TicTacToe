@@ -21,7 +21,7 @@ namespace XOX
         static public Label GetTagLabel(FieldValue fv)
         {
             var result = new Label();
-            result.Markup = start + GetTag(fv) + end;
+            result.Markup = GetTag(fv);
 
             return result;
         }
@@ -31,7 +31,6 @@ namespace XOX
             return dct[fv];
         }
 
-        static private readonly string start = "<span font = 'System'>", end = "</span>";
         static private readonly Dictionary<FieldValue, string> dct = new Dictionary<FieldValue, string>();
     }
 }
