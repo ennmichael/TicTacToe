@@ -10,7 +10,7 @@ namespace XOX
             Application.Init();
 
             var win = new XOXWindow();
-            int theLen = 4;
+            int theLen = 3;
 
             if (args.Length == 1)
             {
