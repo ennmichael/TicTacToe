@@ -25,25 +25,28 @@ namespace XOX
 
         protected override void OnPressed()
         {
-            if (Value != FieldValue.None || tbl.Winner != FieldValue.None) return;
+            if (Value != FieldValue.None)
+                return;
+            if (p.TurnCount < 3 && tbl.Winner != FieldValue.None)
+                return;
 
+            Console.WriteLine("---");
             tbl.NotifyChange();
 
             Value = p.Turn;
-            p.Toggle();
 
             Label = FieldTags.GetTag(Value);
-            FieldValue winner = tbl.Winner;
 
-            if (winner != FieldValue.None)
+            if (tbl.Winner != FieldValue.None)
             {
-                ((XOXWindow)Toplevel).ShowMessage(FieldTags.GetTag(winner) + " wins!");
+                ((XOXWindow)Toplevel).ShowMessage(FieldTags.GetTag(tbl.Winner) + " wins!");
             }
             else if (tbl.Filled())
             {
                 ((XOXWindow)Toplevel).ShowMessage("Tie!");
             }
-
+            
+            p.Toggle();
             Resize();
         }
 

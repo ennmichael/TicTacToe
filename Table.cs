@@ -81,11 +81,13 @@ namespace XOX
 
         private void CalculateWinnerBackIfNeeded()
         {
-            if (p.TurnCount < 6)
+            if (p.TurnCount < 4)
                 return;
 
             if (!winnerCalculated)
             {
+                Console.WriteLine("Calculating for" + p.Turn.ToString());
+
                 winnerCalculated = true;
 
                 var start = new Point(); // So I don't have to destroy and create a variable within every loop
@@ -94,7 +96,7 @@ namespace XOX
                 System.Action specifiedCheck = // Not to be confused with Gtk.Action
                 () =>
                 {
-                    CheckSingle(start, dir, ref winnerBack);
+                        CheckSingle(start, dir, p.Turn, ref winnerBack);
                 };
 
                 dir.Set(1, 0);
@@ -119,23 +121,21 @@ namespace XOX
             }
         }
 
-        private void CheckSingle(Point start, Point direction, ref FieldValue result) // Add parameters
+        private void CheckSingle(
+            Point start, 
+            Point direction, 
+            FieldValue fieldToLookFor, 
+            ref FieldValue result)
         {
             if (result != FieldValue.None) return;
+            result = fieldToLookFor;
 
-            foreach (var fieldToLookFor in new FieldValue[] { FieldValue.X, FieldValue.OX })
-            {
-                result = fieldToLookFor;
-
-                for (int i = 0; i < len; ++i)
-                    if (buttons[start.X + direction.X * i, start.Y + direction.Y * i].Value != fieldToLookFor)
-                    {
-                        result = FieldValue.None;
-                        continue;
-                    }
-
-                if (result != FieldValue.None) break;
-            }
+            for (int i = 0; i < len; ++i)
+                if (buttons[start.X + direction.X * i, start.Y + direction.Y * i].Value != fieldToLookFor)
+                {
+                    result = FieldValue.None;
+                    return;
+                }
         }
 
         private HBox GetHBox(int row)
