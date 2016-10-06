@@ -71,7 +71,7 @@ namespace XOX
 
         public bool Filled()
         {
-            return p.TurnCount >= len * len;
+            return p.TurnCount >= len * len - 1;
         }
 
         public void PackTo(XOXWindow w)
