@@ -27,7 +27,7 @@ namespace XOX
         {
             if (Value != FieldValue.None)
                 return;
-            if (p.TurnCount < 3 && tbl.Winner != FieldValue.None)
+            if (tbl.Winner != FieldValue.None)
                 return;
 
             Console.WriteLine("---");
